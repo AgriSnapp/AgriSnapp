@@ -32,16 +32,16 @@ This project follows an open, welcoming environment. Please be respectful in all
 
 Before contributing, make sure your environment meets these **minimum version requirements**:
 
-| Tool | Minimum Version | Check Command |
-|------|----------------|---------------|
-| Flutter | **3.29.0** (ships with Dart 3.9.x) | `flutter --version` |
-| Dart SDK | **3.9.2** | `dart --version` |
-| Android Studio | **Flamingo (2022.2)** or later | — |
-| Xcode *(iOS/macOS only)* | **14.0** or later | `xcodebuild -version` |
-| Android SDK | API level **21** (Android 5.0) minimum | — |
-| iOS Deployment Target | **13.0** minimum | — |
-| Git | **2.30** or later | `git --version` |
-| Node.js *(web target only)* | **18.0** or later | `node --version` |
+| Tool                        | Minimum Version                        | Check Command         |
+| --------------------------- | -------------------------------------- | --------------------- |
+| Flutter                     | **3.29.0** (ships with Dart 3.9.x)     | `flutter --version`   |
+| Dart SDK                    | **3.9.2**                              | `dart --version`      |
+| Android Studio              | **Flamingo (2022.2)** or later         | —                     |
+| Xcode _(iOS/macOS only)_    | **14.0** or later                      | `xcodebuild -version` |
+| Android SDK                 | API level **21** (Android 5.0) minimum | —                     |
+| iOS Deployment Target       | **13.0** minimum                       | —                     |
+| Git                         | **2.30** or later                      | `git --version`       |
+| Node.js _(web target only)_ | **18.0** or later                      | `node --version`      |
 
 > ⚠️ The project requires **Dart SDK ^3.9.2** as declared in `pubspec.yaml`. Older Flutter installations will not satisfy this constraint. Run `flutter upgrade` to update both Flutter and the bundled Dart SDK together.
 
@@ -122,14 +122,14 @@ flutter pub get
 
 This installs all packages declared in `pubspec.yaml`:
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `http` | ^1.1.0 | Roboflow API requests |
-| `image_picker` | ^1.0.7 | Camera & gallery access |
-| `shared_preferences` | ^2.2.3 | Local data persistence |
-| `translator` | ^1.0.0 | In-app translations |
-| `google_maps_flutter` | ^2.5.0 | Community map screen |
-| `cupertino_icons` | ^1.0.8 | iOS-style icons |
+| Package               | Version | Purpose                 |
+| --------------------- | ------- | ----------------------- |
+| `http`                | ^1.1.0  | Roboflow API requests   |
+| `image_picker`        | ^1.0.7  | Camera & gallery access |
+| `shared_preferences`  | ^2.2.3  | Local data persistence  |
+| `translator`          | ^1.0.0  | In-app translations     |
+| `google_maps_flutter` | ^2.5.0  | Community map screen    |
+| `cupertino_icons`     | ^1.0.8  | iOS-style icons         |
 
 **4. Set up your environment file**
 
@@ -204,16 +204,17 @@ git checkout -b docs/improve-setup-guide
 
 We follow [Conventional Commits](https://www.conventionalcommits.org/) — prefix messages with one of:
 
-| Prefix | When to use |
-|--------|-------------|
-| `feat:` | A new feature |
-| `fix:` | A bug fix |
-| `docs:` | Documentation only |
+| Prefix      | When to use                          |
+| ----------- | ------------------------------------ |
+| `feat:`     | A new feature                        |
+| `fix:`      | A bug fix                            |
+| `docs:`     | Documentation only                   |
 | `refactor:` | Code change with no behaviour change |
-| `test:` | Adding or updating tests |
-| `chore:` | Build process, dependencies, tooling |
+| `test:`     | Adding or updating tests             |
+| `chore:`    | Build process, dependencies, tooling |
 
 Example:
+
 ```bash
 git commit -m "feat: add offline caching for Roboflow responses"
 ```
@@ -274,7 +275,7 @@ Configure your editor to format on save so you never have to think about it.
 }
 ```
 
-**Android Studio / IntelliJ** — go to *Preferences → Languages & Frameworks → Flutter* and enable **Format code on save**.
+**Android Studio / IntelliJ** — go to _Preferences → Languages & Frameworks → Flutter_ and enable **Format code on save**.
 
 ### Pre-commit hook (optional but recommended)
 

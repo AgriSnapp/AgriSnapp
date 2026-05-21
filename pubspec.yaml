@@ -1,5 +1,5 @@
 name: agrisnap
-description: "A new Flutter project."
+description: 'A new Flutter project.'
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -10,14 +10,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
+
   http: ^1.1.0
   image_picker: ^1.0.7
   shared_preferences: ^2.2.3
   translator: ^1.0.0
   cupertino_icons: ^1.0.8
-  google_maps_flutter: ^2.5.0  # ← ADD THIS BACK
-
+  google_maps_flutter: ^2.5.0 # ← ADD THIS BACK
 
 dev_dependencies:
   flutter_test:
