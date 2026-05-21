@@ -5,14 +5,9 @@ class TranslatedText extends StatefulWidget {
   final String text;
   final TextStyle? style;
   final TextAlign? textAlign;
-  
-  const TranslatedText(
-    this.text, {
-    this.style,
-    this.textAlign,
-    Key? key,
-  }) : super(key: key);
-  
+
+  const TranslatedText(this.text, {this.style, this.textAlign, super.key});
+
   @override
   State<TranslatedText> createState() => _TranslatedTextState();
 }
@@ -20,13 +15,13 @@ class TranslatedText extends StatefulWidget {
 class _TranslatedTextState extends State<TranslatedText> {
   String translatedText = '';
   bool isLoading = true;
-  
+
   @override
   void initState() {
     super.initState();
     _translate();
   }
-  
+
   @override
   void didUpdateWidget(TranslatedText oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -34,7 +29,7 @@ class _TranslatedTextState extends State<TranslatedText> {
       _translate();
     }
   }
-  
+
   Future<void> _translate() async {
     setState(() => isLoading = true);
     String result = await TranslationService.translate(widget.text);
@@ -43,12 +38,20 @@ class _TranslatedTextState extends State<TranslatedText> {
       isLoading = false;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return Text(widget.text, style: widget.style, textAlign: widget.textAlign);
+      return Text(
+        widget.text,
+        style: widget.style,
+        textAlign: widget.textAlign,
+      );
     }
-    return Text(translatedText, style: widget.style, textAlign: widget.textAlign);
+    return Text(
+      translatedText,
+      style: widget.style,
+      textAlign: widget.textAlign,
+    );
   }
 }

@@ -1,13 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:translator/translator.dart';
 
 class TranslationService {
   static final translator = GoogleTranslator();
   static String currentLanguage = 'en'; // Default English
-  
+
   // Translate any text to current language
   static Future<String> translate(String text) async {
     if (currentLanguage == 'en') return text; // No translation needed
-    
+
     try {
       var translation = await translator.translate(
         text,
@@ -16,16 +17,16 @@ class TranslationService {
       );
       return translation.text;
     } catch (e) {
-      print('Translation error: $e');
+      debugPrint('Translation error: $e');
       return text; // Return original if translation fails
     }
   }
-  
+
   // Change app language
   static void setLanguage(String langCode) {
     currentLanguage = langCode;
   }
-  
+
   // Get available languages
   static Map<String, String> getLanguages() {
     return {

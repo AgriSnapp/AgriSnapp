@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'dart:convert';
-import 'dart:math';  // ← ADD THIS LINE
+// ← ADD THIS LINE
 import 'roboflow_service.dart';
 import 'translation_service.dart';
 import 'translated_text.dart';
@@ -13,16 +12,14 @@ import 'badge_system.dart';
 import 'ai_insights.dart';
 import 'privacy_manager.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const AgriSnapApp());
 }
 
 class AgriSnapApp extends StatelessWidget {
-  const AgriSnapApp({Key? key}) : super(key: key);
-  
+  const AgriSnapApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,27 +28,27 @@ class AgriSnapApp extends StatelessWidget {
         primarySwatch: Colors.green,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: PrivacyWelcomeScreen(),  // ← DEMO MODE: Always show GDPR screen
+      home: PrivacyWelcomeScreen(), // ← DEMO MODE: Always show GDPR screen
     );
   }
 }
 
-
-
 class MainNavigationScreen extends StatefulWidget {
+  const MainNavigationScreen({super.key});
+
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _currentIndex = 1;
-  
+
   final List<Widget> _pages = [
     CommunityScreen(),
     DiseaseDetectionScreen(),
     ProfileScreen(),
   ];
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,18 +66,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         unselectedFontSize: 12,
         type: BottomNavigationBarType.fixed,
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: 'Community',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Community'),
           BottomNavigationBarItem(
             icon: Icon(Icons.camera_alt, size: 30),
             label: 'Scan',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
     );
@@ -91,16 +82,19 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 // COMMUNITY SCREEN
 // ============================================
 class CommunityScreen extends StatefulWidget {
+  const CommunityScreen({super.key});
+
   @override
   State<CommunityScreen> createState() => _CommunityScreenState();
 }
 
 class _CommunityScreenState extends State<CommunityScreen> {
+  // ignore: unused_field
   GoogleMapController? _mapController;
-  Set<Marker> _markers = {};
-  
+  final Set<Marker> _markers = {};
+
   static const LatLng _mediterraneanCenter = LatLng(38.0, 15.0);
-  
+
   final List<Map<String, dynamic>> farmers = [
     {
       'name': 'Maria Rossi',
@@ -159,21 +153,22 @@ class _CommunityScreenState extends State<CommunityScreen> {
       'isYou': false,
     },
     {
-    'name': 'Johnpaul Ifeanyichukwu Egwuatu',
-    'location': 'Castiglia, Italy',
-    'lat': 44.4742,
-    'lon': 11.4369,
-    'status': 'Preparing for harvest',
-    'isYou': false,
-  },
+      'name': 'Johnpaul Ifeanyichukwu Egwuatu',
+      'location': 'Castiglia, Italy',
+      'lat': 44.4742,
+      'lon': 11.4369,
+      'status': 'Preparing for harvest',
+      'isYou': false,
+    },
   ];
-  
+
   final List<Map<String, dynamic>> communityPosts = [
     {
       'farmer': 'Alayna Shariff',
       'location': 'Granada, Spain',
       'time': '3 hours ago',
-      'content': 'Just detected peacock spot on my grove. Starting copper fungicide treatment today. Any tips?',
+      'content':
+          'Just detected peacock spot on my grove. Starting copper fungicide treatment today. Any tips?',
       'likes': 28,
       'comments': 19,
       'avatar': '👩‍🌾',
@@ -182,7 +177,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
       'farmer': 'Giulio Presaghi',
       'location': 'Bracciano, Italy',
       'time': '5 hours ago',
-      'content': 'Testing new organic pest control methods. So far looking promising!',
+      'content':
+          'Testing new organic pest control methods. So far looking promising!',
       'likes': 45,
       'comments': 23,
       'avatar': '👨‍🌾',
@@ -191,7 +187,8 @@ class _CommunityScreenState extends State<CommunityScreen> {
       'farmer': 'Quynh Anh Tran',
       'location': 'Souss Valley, Morocco',
       'time': '1 day ago',
-      'content': 'Dealing with olive knot disease. Pruned infected branches and applied treatment.',
+      'content':
+          'Dealing with olive knot disease. Pruned infected branches and applied treatment.',
       'likes': 67,
       'comments': 31,
       'avatar': '👩‍🌾',
@@ -206,13 +203,13 @@ class _CommunityScreenState extends State<CommunityScreen> {
       'avatar': '👩‍🌾',
     },
   ];
-  
+
   @override
   void initState() {
     super.initState();
     _createMarkers();
   }
-  
+
   void _createMarkers() {
     for (var farmer in farmers) {
       _markers.add(
@@ -221,7 +218,9 @@ class _CommunityScreenState extends State<CommunityScreen> {
           position: LatLng(farmer['lat'], farmer['lon']),
           icon: farmer['isYou']
               ? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen)
-              : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+              : BitmapDescriptor.defaultMarkerWithHue(
+                  BitmapDescriptor.hueAzure,
+                ),
           infoWindow: InfoWindow(
             title: farmer['name'],
             snippet: farmer['status'],
@@ -248,10 +247,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
               );
             },
           ),
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
+          IconButton(icon: Icon(Icons.search), onPressed: () {}),
         ],
       ),
       body: CustomScrollView(
@@ -264,7 +260,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 10,
                     spreadRadius: 2,
                   ),
@@ -291,13 +287,16 @@ class _CommunityScreenState extends State<CommunityScreen> {
                       top: 12,
                       right: 12,
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(alpha: 0.1),
                               blurRadius: 4,
                             ),
                           ],
@@ -305,7 +304,11 @@ class _CommunityScreenState extends State<CommunityScreen> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.people, size: 16, color: Colors.green[700]),
+                            Icon(
+                              Icons.people,
+                              size: 16,
+                              color: Colors.green[700],
+                            ),
                             SizedBox(width: 6),
                             Text(
                               '${farmers.length} farmers',
@@ -326,7 +329,9 @@ class _CommunityScreenState extends State<CommunityScreen> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => CommunityMapScreen()),
+                            MaterialPageRoute(
+                              builder: (context) => CommunityMapScreen(),
+                            ),
                           );
                         },
                         icon: Icon(Icons.open_in_full, size: 14),
@@ -334,7 +339,10 @@ class _CommunityScreenState extends State<CommunityScreen> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green[700],
                           foregroundColor: Colors.white,
-                          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
                           textStyle: TextStyle(fontSize: 12),
                         ),
                       ),
@@ -352,111 +360,106 @@ class _CommunityScreenState extends State<CommunityScreen> {
                 children: [
                   TranslatedText(
                     'Community Feed',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: TranslatedText('Filter', style: TextStyle(color: Colors.green[700])),
+                    child: TranslatedText(
+                      'Filter',
+                      style: TextStyle(color: Colors.green[700]),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
           SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final post = communityPosts[index];
-                return Card(
-                  margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  elevation: 2,
-                  child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.green[100],
-                                shape: BoxShape.circle,
+            delegate: SliverChildBuilderDelegate((context, index) {
+              final post = communityPosts[index];
+              return Card(
+                margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                elevation: 2,
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.green[100],
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                post['avatar'],
+                                style: TextStyle(fontSize: 28),
                               ),
-                              child: Center(
-                                child: Text(
-                                  post['avatar'],
-                                  style: TextStyle(fontSize: 28),
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  post['farmer'],
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
                                 ),
-                              ),
-                            ),
-                            SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    post['farmer'],
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
+                                SizedBox(height: 2),
+                                Text(
+                                  '${post['location']} • ${post['time']}',
+                                  style: TextStyle(
+                                    color: Colors.grey[600],
+                                    fontSize: 12,
                                   ),
-                                  SizedBox(height: 2),
-                                  Text(
-                                    '${post['location']} • ${post['time']}',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            Icon(Icons.more_vert, color: Colors.grey),
-                          ],
-                        ),
-                        SizedBox(height: 12),
-                        TranslatedText(
-                          post['content'],
-                          style: TextStyle(fontSize: 14, height: 1.4),
-                        ),
-                        SizedBox(height: 12),
-                        Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            TextButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.thumb_up_outlined, size: 18),
-                              label: Text('${post['likes']}'),
-                            ),
-                            TextButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.comment_outlined, size: 18),
-                              label: Text('${post['comments']}'),
-                            ),
-                            TextButton.icon(
-                              onPressed: () {},
-                              icon: Icon(Icons.share_outlined, size: 18),
-                              label: TranslatedText('Share'),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                          Icon(Icons.more_vert, color: Colors.grey),
+                        ],
+                      ),
+                      SizedBox(height: 12),
+                      TranslatedText(
+                        post['content'],
+                        style: TextStyle(fontSize: 14, height: 1.4),
+                      ),
+                      SizedBox(height: 12),
+                      Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          TextButton.icon(
+                            onPressed: () {},
+                            icon: Icon(Icons.thumb_up_outlined, size: 18),
+                            label: Text('${post['likes']}'),
+                          ),
+                          TextButton.icon(
+                            onPressed: () {},
+                            icon: Icon(Icons.comment_outlined, size: 18),
+                            label: Text('${post['comments']}'),
+                          ),
+                          TextButton.icon(
+                            onPressed: () {},
+                            icon: Icon(Icons.share_outlined, size: 18),
+                            label: TranslatedText('Share'),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                );
-              },
-              childCount: communityPosts.length,
-            ),
+                ),
+              );
+            }, childCount: communityPosts.length),
           ),
-          SliverToBoxAdapter(
-            child: SizedBox(height: 80),
-          ),
+          SliverToBoxAdapter(child: SizedBox(height: 80)),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -468,11 +471,12 @@ class _CommunityScreenState extends State<CommunityScreen> {
   }
 }
 
-
 // ============================================
 // DISEASE DETECTION SCREEN (WITH CAMERA)
 // ============================================
 class DiseaseDetectionScreen extends StatefulWidget {
+  const DiseaseDetectionScreen({super.key});
+
   @override
   State<DiseaseDetectionScreen> createState() => _DiseaseDetectionScreenState();
 }
@@ -483,9 +487,8 @@ class _DiseaseDetectionScreenState extends State<DiseaseDetectionScreen> {
   final RoboflowService _roboflowService = RoboflowService();
   bool _isAnalyzing = false;
   String _resultText = '';
-  String _currentDiseaseName = '';  // ← ADD THIS LINE
+  String _currentDiseaseName = ''; // ← ADD THIS LINE
 
-  
   String getConfidenceLevel(double confidence) {
     if (confidence >= 90) return 'Highly Confident';
     if (confidence >= 75) return 'Confident';
@@ -493,82 +496,85 @@ class _DiseaseDetectionScreenState extends State<DiseaseDetectionScreen> {
     if (confidence >= 40) return 'Suspicious';
     return 'Uncertain';
   }
-  
+
   Map<String, Map<String, String>> diseaseDatabase = {
     '0': {
       'name': 'Olive Knot Disease',
       'local_names': 'Knot Disease, Olive Cancer, Tubercle Disease',
-      'treatment': 'Cut infected branches. Spray copper solution. Disinfect tools.',
+      'treatment':
+          'Cut infected branches. Spray copper solution. Disinfect tools.',
       'when': 'Late autumn or winter',
     },
     '1': {
       'name': 'Peacock Spot',
       'local_names': 'Peacock Eye, Bird\'s Eye Spot',
-      'treatment': 'Remove fallen leaves. Apply copper fungicide. Improve airflow.',
+      'treatment':
+          'Remove fallen leaves. Apply copper fungicide. Improve airflow.',
       'when': 'October-November and February-March',
     },
   };
-  
+
   String getDiseaseName(String classId) {
     String cleanId = classId.toString().replaceAll(RegExp(r'[^0-9]'), '');
     return diseaseDatabase[cleanId]?['name'] ?? 'Disease Class $classId';
   }
-// CAMERA CAPTURE WITH SIMULATOR CHECK
-Future<void> _takePhoto() async {
-  try {
-    final XFile? image = await _picker.pickImage(
-      source: ImageSource.camera,
-      preferredCameraDevice: CameraDevice.rear,
-      imageQuality: 85,
-    );
-    
-    if (image != null) {
-      _processImage(image.path);
-    }
-  } on PlatformException catch (e) {
-    // Handle camera not available error
-    if (e.code == 'camera_access_denied') {
-      _showErrorDialog(
-        'Camera Access Denied',
-        'Please enable camera permissions in Settings to use this feature.',
-      );
-    } else {
-      _showErrorDialog(
-        'Camera Not Available',
-        'Camera is not available on this device. Please use the Gallery option or test on a real device.',
-      );
-    }
-  } catch (e) {
-    _showErrorDialog(
-      'Camera Error',
-      'Could not access camera. If you\'re using a simulator, please use the Gallery option instead.',
-    );
-  }
-}
 
-// Error Dialog Helper
-void _showErrorDialog(String title, String message) {
-  showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      title: Row(
-        children: [
-          Icon(Icons.error_outline, color: Colors.orange, size: 28),
-          SizedBox(width: 12),
-          Text(title),
+  // CAMERA CAPTURE WITH SIMULATOR CHECK
+  Future<void> _takePhoto() async {
+    try {
+      final XFile? image = await _picker.pickImage(
+        source: ImageSource.camera,
+        preferredCameraDevice: CameraDevice.rear,
+        imageQuality: 85,
+      );
+
+      if (image != null) {
+        _processImage(image.path);
+      }
+    } on PlatformException catch (e) {
+      // Handle camera not available error
+      if (e.code == 'camera_access_denied') {
+        _showErrorDialog(
+          'Camera Access Denied',
+          'Please enable camera permissions in Settings to use this feature.',
+        );
+      } else {
+        _showErrorDialog(
+          'Camera Not Available',
+          'Camera is not available on this device. Please use the Gallery option or test on a real device.',
+        );
+      }
+    } catch (e) {
+      _showErrorDialog(
+        'Camera Error',
+        'Could not access camera. If you\'re using a simulator, please use the Gallery option instead.',
+      );
+    }
+  }
+
+  // Error Dialog Helper
+  void _showErrorDialog(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Row(
+          children: [
+            Icon(Icons.error_outline, color: Colors.orange, size: 28),
+            SizedBox(width: 12),
+            Text(title),
+          ],
+        ),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('OK', style: TextStyle(color: Colors.green[700])),
+          ),
         ],
       ),
-      content: Text(message),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text('OK', style: TextStyle(color: Colors.green[700])),
-        ),
-      ],
-    ),
-  );
-}
+    );
+  }
 
   // GALLERY UPLOAD
   Future<void> _pickImage() async {
@@ -577,7 +583,7 @@ void _showErrorDialog(String title, String message) {
         source: ImageSource.gallery,
         imageQuality: 85,
       );
-      
+
       if (image != null) {
         _processImage(image.path);
       }
@@ -587,56 +593,56 @@ void _showErrorDialog(String title, String message) {
       });
     }
   }
-  
-// PROCESS IMAGE (shared function)
-Future<void> _processImage(String imagePath) async {
-  setState(() {
-    _image = File(imagePath);
-    _isAnalyzing = true;
-    _resultText = '';
-  });
-  
-  try {
-    final results = await _roboflowService.detectDisease(imagePath);
-    
-    setState(() {
-      _isAnalyzing = false;
-      
-      if (results.containsKey('predictions')) {
-        var predictions = results['predictions'];
-        
-        if (predictions is List && predictions.isNotEmpty) {
-          var topPrediction = predictions[0];
-          String classId = topPrediction['class']?.toString() ?? '0';
-          double confidence = ((topPrediction['confidence'] ?? 0.0) * 100);
-          
-          String diseaseName = getDiseaseName(classId);
-          _currentDiseaseName = diseaseName;  // ← ADD THIS LINE
-          String confidenceLevel = getConfidenceLevel(confidence);
-          
-          var info = diseaseDatabase[classId.replaceAll(RegExp(r'[^0-9]'), '')];
-          
-          _resultText = 'DISEASE DETECTED\n\n';
-          _resultText += '$diseaseName\n';
-          _resultText += '$confidenceLevel\n\n';
-          if (info != null) {
-            _resultText += 'Treatment: ${info['treatment']}\n\n';
-            _resultText += 'Best time: ${info['when']}';
-          }
-        } else {
-          _currentDiseaseName = 'Healthy';  // ← ADD THIS TOO
-          _resultText = 'HEALTHY LEAF\n\nNo diseases detected!';
-        }
-      }
-    });
-  } catch (e) {
-    setState(() {
-      _isAnalyzing = false;
-      _resultText = 'Analysis failed. Try again.';
-    });
-  }
-}
 
+  // PROCESS IMAGE (shared function)
+  Future<void> _processImage(String imagePath) async {
+    setState(() {
+      _image = File(imagePath);
+      _isAnalyzing = true;
+      _resultText = '';
+    });
+
+    try {
+      final results = await _roboflowService.detectDisease(imagePath);
+
+      setState(() {
+        _isAnalyzing = false;
+
+        if (results.containsKey('predictions')) {
+          var predictions = results['predictions'];
+
+          if (predictions is List && predictions.isNotEmpty) {
+            var topPrediction = predictions[0];
+            String classId = topPrediction['class']?.toString() ?? '0';
+            double confidence = ((topPrediction['confidence'] ?? 0.0) * 100);
+
+            String diseaseName = getDiseaseName(classId);
+            _currentDiseaseName = diseaseName; // ← ADD THIS LINE
+            String confidenceLevel = getConfidenceLevel(confidence);
+
+            var info =
+                diseaseDatabase[classId.replaceAll(RegExp(r'[^0-9]'), '')];
+
+            _resultText = 'DISEASE DETECTED\n\n';
+            _resultText += '$diseaseName\n';
+            _resultText += '$confidenceLevel\n\n';
+            if (info != null) {
+              _resultText += 'Treatment: ${info['treatment']}\n\n';
+              _resultText += 'Best time: ${info['when']}';
+            }
+          } else {
+            _currentDiseaseName = 'Healthy'; // ← ADD THIS TOO
+            _resultText = 'HEALTHY LEAF\n\nNo diseases detected!';
+          }
+        }
+      });
+    } catch (e) {
+      setState(() {
+        _isAnalyzing = false;
+        _resultText = 'Analysis failed. Try again.';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -655,7 +661,7 @@ Future<void> _processImage(String imagePath) async {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 20),
-                
+
                 // IMAGE PREVIEW
                 if (_image != null) ...[
                   Container(
@@ -666,7 +672,7 @@ Future<void> _processImage(String imagePath) async {
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.green.withOpacity(0.2),
+                          color: Colors.green.withValues(alpha: 0.2),
                           blurRadius: 15,
                           spreadRadius: 2,
                         ),
@@ -713,7 +719,7 @@ Future<void> _processImage(String imagePath) async {
                   ),
                   SizedBox(height: 24),
                 ],
-                
+
                 // ANALYZING INDICATOR
                 if (_isAnalyzing) ...[
                   CircularProgressIndicator(
@@ -753,16 +759,19 @@ Future<void> _processImage(String imagePath) async {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green[700],
                           foregroundColor: Colors.white,
-                          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 16,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
                           elevation: 4,
                         ),
                       ),
-                      
+
                       SizedBox(width: 16),
-                      
+
                       // GALLERY BUTTON
                       ElevatedButton.icon(
                         onPressed: _pickImage,
@@ -781,10 +790,16 @@ Future<void> _processImage(String imagePath) async {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           foregroundColor: Colors.green[700],
-                          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 16,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
-                            side: BorderSide(color: Colors.green[700]!, width: 2),
+                            side: BorderSide(
+                              color: Colors.green[700]!,
+                              width: 2,
+                            ),
                           ),
                           elevation: 2,
                         ),
@@ -793,7 +808,7 @@ Future<void> _processImage(String imagePath) async {
                   ),
                   SizedBox(height: 24),
                 ],
-                
+
                 // RESULT BOX
                 if (_resultText.isNotEmpty) ...[
                   Container(
@@ -804,25 +819,26 @@ Future<void> _processImage(String imagePath) async {
                       color: _resultText.contains('failed')
                           ? Colors.red[50]
                           : _resultText.contains('DISEASE')
-                              ? Colors.orange[50]
-                              : Colors.green[50],
+                          ? Colors.orange[50]
+                          : Colors.green[50],
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
                         color: _resultText.contains('failed')
                             ? Colors.red
                             : _resultText.contains('DISEASE')
-                                ? Colors.orange
-                                : Colors.green,
+                            ? Colors.orange
+                            : Colors.green,
                         width: 2,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: (_resultText.contains('failed')
-                                  ? Colors.red
-                                  : _resultText.contains('DISEASE')
+                          color:
+                              (_resultText.contains('failed')
+                                      ? Colors.red
+                                      : _resultText.contains('DISEASE')
                                       ? Colors.orange
                                       : Colors.green)
-                              .withOpacity(0.1),
+                                  .withValues(alpha: 0.1),
                           blurRadius: 10,
                           spreadRadius: 2,
                         ),
@@ -834,29 +850,26 @@ Future<void> _processImage(String imagePath) async {
                           _resultText.contains('HEALTHY')
                               ? Icons.check_circle
                               : _resultText.contains('DISEASE')
-                                  ? Icons.warning
-                                  : Icons.error,
+                              ? Icons.warning
+                              : Icons.error,
                           size: 48,
                           color: _resultText.contains('failed')
                               ? Colors.red
                               : _resultText.contains('DISEASE')
-                                  ? Colors.orange
-                                  : Colors.green,
+                              ? Colors.orange
+                              : Colors.green,
                         ),
                         SizedBox(height: 16),
                         TranslatedText(
                           _resultText,
-                          style: TextStyle(
-                            fontSize: 14,
-                            height: 1.6,
-                          ),
+                          style: TextStyle(fontSize: 14, height: 1.6),
                           textAlign: TextAlign.center,
                         ),
                       ],
                     ),
                   ),
                   SizedBox(height: 16),
-                  
+
                   // AI INSIGHTS - PERSONALIZED! 🔥
                   AIInsightsWidget(
                     insights: _resultText.contains('DISEASE')
@@ -864,12 +877,14 @@ Future<void> _processImage(String imagePath) async {
                             _currentDiseaseName,
                             'Istanbul, Turkey',
                           )
-                        : AIInsights.generateHealthyInsights('Istanbul, Turkey'),
+                        : AIInsights.generateHealthyInsights(
+                            'Istanbul, Turkey',
+                          ),
                   ),
-                  
+
                   SizedBox(height: 24),
                 ],
-                
+
                 SizedBox(height: 20),
               ],
             ),
@@ -879,13 +894,17 @@ Future<void> _processImage(String imagePath) async {
     );
   }
 }
+
 // ============================================
 // PROFILE SCREEN (WITH PRIVACY BUTTON)
 // ============================================
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
+
 class _ProfileScreenState extends State<ProfileScreen> {
   Map<String, int> userStats = {
     'scan': 45,
@@ -893,14 +912,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     'help': 67,
     'streak': 15,
   };
-  
+
   @override
   Widget build(BuildContext context) {
     List<AchievementBadge> topBadges = BadgeSystem.getTopBadges(userStats);
     int userLevel = BadgeSystem.calculateLevel(userStats);
     String levelTitle = BadgeSystem.getLevelTitle(userLevel);
     Color levelColor = BadgeSystem.getLevelColor(userLevel);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: TranslatedText('My Profile'),
@@ -933,7 +952,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           children: [
             SizedBox(height: 20),
-            
+
             Stack(
               alignment: Alignment.center,
               children: [
@@ -945,7 +964,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     border: Border.all(color: levelColor, width: 4),
                     boxShadow: [
                       BoxShadow(
-                        color: levelColor.withOpacity(0.3),
+                        color: levelColor.withValues(alpha: 0.3),
                         blurRadius: 10,
                         spreadRadius: 3,
                       ),
@@ -982,14 +1001,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ],
             ),
-            
+
             SizedBox(height: 15),
-            Text('Yasemin Ates', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            Text(
+              'Yasemin Ates',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
             SizedBox(height: 5),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
               decoration: BoxDecoration(
-                color: levelColor.withOpacity(0.2),
+                color: levelColor.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: TranslatedText(
@@ -1002,10 +1024,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             SizedBox(height: 5),
-            TranslatedText('Olive Farmer • Turkey', style: TextStyle(color: Colors.grey[600])),
-            
+            TranslatedText(
+              'Olive Farmer • Turkey',
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+
             SizedBox(height: 25),
-            
+
             Container(
               margin: EdgeInsets.symmetric(horizontal: 20),
               padding: EdgeInsets.all(16),
@@ -1016,15 +1041,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _buildStatColumn('${userStats['scan']}', 'Scans', Icons.camera_alt),
-                  _buildStatColumn('${userStats['post']}', 'Posts', Icons.post_add),
-                  _buildStatColumn('${userStats['streak']}', 'Streak', Icons.local_fire_department),
+                  _buildStatColumn(
+                    '${userStats['scan']}',
+                    'Scans',
+                    Icons.camera_alt,
+                  ),
+                  _buildStatColumn(
+                    '${userStats['post']}',
+                    'Posts',
+                    Icons.post_add,
+                  ),
+                  _buildStatColumn(
+                    '${userStats['streak']}',
+                    'Streak',
+                    Icons.local_fire_department,
+                  ),
                 ],
               ),
             ),
-            
+
             SizedBox(height: 30),
-            
+
             if (topBadges.isNotEmpty) ...[
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
@@ -1033,7 +1070,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     TranslatedText(
                       'Top Achievements',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       '${topBadges.length}',
@@ -1047,8 +1087,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               SizedBox(height: 15),
-              
-              Container(
+
+              SizedBox(
                 height: 140,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -1056,7 +1096,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   itemCount: topBadges.length,
                   itemBuilder: (context, index) {
                     AchievementBadge badge = topBadges[index];
-                    
+
                     return Container(
                       width: 110,
                       margin: EdgeInsets.only(right: 12),
@@ -1065,8 +1105,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
-                            badge.color.withOpacity(0.3),
-                            badge.color.withOpacity(0.1),
+                            badge.color.withValues(alpha: 0.3),
+                            badge.color.withValues(alpha: 0.1),
                           ],
                         ),
                         borderRadius: BorderRadius.circular(16),
@@ -1075,10 +1115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            badge.emoji,
-                            style: TextStyle(fontSize: 48),
-                          ),
+                          Text(badge.emoji, style: TextStyle(fontSize: 48)),
                           SizedBox(height: 8),
                           TranslatedText(
                             badge.name,
@@ -1100,10 +1137,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   },
                 ),
               ),
-              
+
               SizedBox(height: 30),
             ],
-            
+
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
@@ -1114,12 +1151,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 15),
-                  
-                  _buildInfoTile(Icons.location_on, 'Location', 'Istanbul, Turkey'),
+
+                  _buildInfoTile(
+                    Icons.location_on,
+                    'Location',
+                    'Istanbul, Turkey',
+                  ),
                   _buildInfoTile(Icons.terrain, 'Farm Size', '8.5 hectares'),
-                  
+
                   SizedBox(height: 25),
-                  
+
                   // EDIT PROFILE BUTTON
                   ElevatedButton(
                     onPressed: () {},
@@ -1129,9 +1170,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     child: TranslatedText('EDIT PROFILE'),
                   ),
-                  
+
                   SizedBox(height: 12),
-                  
+
                   // GDPR COMPLIANCE SECTION WITH EU FLAG
                   Container(
                     padding: EdgeInsets.all(16),
@@ -1144,7 +1185,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.blue.withOpacity(0.3),
+                          color: Colors.blue.withValues(alpha: 0.3),
                           blurRadius: 10,
                           spreadRadius: 2,
                         ),
@@ -1182,7 +1223,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ],
                               ),
                             ),
-                            Icon(Icons.verified_user, color: Colors.white, size: 24),
+                            Icon(
+                              Icons.verified_user,
+                              color: Colors.white,
+                              size: 24,
+                            ),
                           ],
                         ),
                         SizedBox(height: 12),
@@ -1190,7 +1235,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => PrivacySettingsScreen()),
+                              MaterialPageRoute(
+                                builder: (context) => PrivacySettingsScreen(),
+                              ),
                             );
                           },
                           icon: Icon(Icons.settings, size: 18),
@@ -1204,7 +1251,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                   ),
-                  
+
                   SizedBox(height: 40),
                 ],
               ),
@@ -1214,7 +1261,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
-  
+
   Widget _buildStatColumn(String value, String label, IconData icon) {
     return Column(
       children: [
@@ -1229,17 +1276,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         SizedBox(height: 2),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 11,
-            color: Colors.grey[600],
-          ),
-        ),
+        Text(label, style: TextStyle(fontSize: 11, color: Colors.grey[600])),
       ],
     );
   }
-  
+
   Widget _buildInfoTile(IconData icon, String label, String value) {
     return Padding(
       padding: EdgeInsets.only(bottom: 12),
@@ -1250,9 +1291,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TranslatedText(label, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+              TranslatedText(
+                label,
+                style: TextStyle(color: Colors.grey[600], fontSize: 12),
+              ),
               SizedBox(height: 2),
-              Text(value, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+              Text(
+                value,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
             ],
           ),
         ],

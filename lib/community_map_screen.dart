@@ -3,16 +3,19 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'translated_text.dart';
 
 class CommunityMapScreen extends StatefulWidget {
+  const CommunityMapScreen({super.key});
+
   @override
   State<CommunityMapScreen> createState() => _CommunityMapScreenState();
 }
 
 class _CommunityMapScreenState extends State<CommunityMapScreen> {
+  // ignore: unused_field
   GoogleMapController? _mapController;
-  Set<Marker> _markers = {};
-  
+  final Set<Marker> _markers = {};
+
   static const LatLng _mediterraneanCenter = LatLng(38.0, 15.0);
-  
+
   final List<Map<String, dynamic>> farmers = [
     {
       'name': 'Yasemin Ates',
@@ -75,33 +78,33 @@ class _CommunityMapScreenState extends State<CommunityMapScreen> {
       'isYou': false,
     },
     {
-    'name': 'Johnpaul Ifeanyichukwu Egwuatu',
-    'location': 'Castiglia, Italy',
-    'lat': 44.4742,
-    'lon': 11.4369,
-    'status': 'Preparing for harvest',
-    'lastScan': '5 hours ago',
-    'avatar': '👨‍🌾',
-    'isYou': false,
+      'name': 'Johnpaul Ifeanyichukwu Egwuatu',
+      'location': 'Castiglia, Italy',
+      'lat': 44.4742,
+      'lon': 11.4369,
+      'status': 'Preparing for harvest',
+      'lastScan': '5 hours ago',
+      'avatar': '👨‍🌾',
+      'isYou': false,
     },
     {
-    'name': 'Maria Rossi',
-    'location': 'Palermo, Italy',
-    'lat': 38.1157,
-    'lon': 13.3615,
-    'status': 'Preparing for harvest',
-    'lastScan': '11 hours ago',
-    'avatar': '👨‍🌾',
-    'isYou': false,
-    },    
+      'name': 'Maria Rossi',
+      'location': 'Palermo, Italy',
+      'lat': 38.1157,
+      'lon': 13.3615,
+      'status': 'Preparing for harvest',
+      'lastScan': '11 hours ago',
+      'avatar': '👨‍🌾',
+      'isYou': false,
+    },
   ];
-  
+
   @override
   void initState() {
     super.initState();
     _createMarkers();
   }
-  
+
   void _createMarkers() {
     for (var farmer in farmers) {
       _markers.add(
@@ -110,7 +113,9 @@ class _CommunityMapScreenState extends State<CommunityMapScreen> {
           position: LatLng(farmer['lat'], farmer['lon']),
           icon: farmer['isYou']
               ? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen)
-              : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+              : BitmapDescriptor.defaultMarkerWithHue(
+                  BitmapDescriptor.hueAzure,
+                ),
           infoWindow: InfoWindow(
             title: farmer['name'],
             snippet: farmer['status'],
@@ -121,7 +126,7 @@ class _CommunityMapScreenState extends State<CommunityMapScreen> {
     }
     setState(() {});
   }
-  
+
   void _showFarmerDetails(Map<String, dynamic> farmer) {
     showModalBottomSheet(
       context: context,
@@ -140,11 +145,16 @@ class _CommunityMapScreenState extends State<CommunityMapScreen> {
                   width: 60,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: farmer['isYou'] ? Colors.green[100] : Colors.blue[100],
+                    color: farmer['isYou']
+                        ? Colors.green[100]
+                        : Colors.blue[100],
                     shape: BoxShape.circle,
                   ),
                   child: Center(
-                    child: Text(farmer['avatar'], style: TextStyle(fontSize: 32)),
+                    child: Text(
+                      farmer['avatar'],
+                      style: TextStyle(fontSize: 32),
+                    ),
                   ),
                 ),
                 SizedBox(width: 15),
@@ -154,14 +164,20 @@ class _CommunityMapScreenState extends State<CommunityMapScreen> {
                     children: [
                       Text(
                         farmer['name'],
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       SizedBox(height: 4),
                       Row(
                         children: [
                           Icon(Icons.location_on, size: 16, color: Colors.grey),
                           SizedBox(width: 4),
-                          Text(farmer['location'], style: TextStyle(color: Colors.grey)),
+                          Text(
+                            farmer['location'],
+                            style: TextStyle(color: Colors.grey),
+                          ),
                         ],
                       ),
                     ],
@@ -169,17 +185,17 @@ class _CommunityMapScreenState extends State<CommunityMapScreen> {
                 ),
               ],
             ),
-            
+
             SizedBox(height: 20),
             Divider(),
             SizedBox(height: 10),
-            
+
             _buildInfoRow(Icons.healing, 'Status', farmer['status']),
             SizedBox(height: 10),
             _buildInfoRow(Icons.access_time, 'Last Scan', farmer['lastScan']),
-            
+
             SizedBox(height: 20),
-            
+
             if (!farmer['isYou']) ...[
               Row(
                 children: [
@@ -210,14 +226,14 @@ class _CommunityMapScreenState extends State<CommunityMapScreen> {
                 ],
               ),
             ],
-            
+
             SizedBox(height: 10),
           ],
         ),
       ),
     );
   }
-  
+
   Widget _buildInfoRow(IconData icon, String label, String value) {
     return Row(
       children: [
@@ -225,12 +241,15 @@ class _CommunityMapScreenState extends State<CommunityMapScreen> {
         SizedBox(width: 10),
         Text('$label: ', style: TextStyle(fontWeight: FontWeight.bold)),
         Expanded(
-          child: TranslatedText(value, style: TextStyle(color: Colors.grey[700])),
+          child: TranslatedText(
+            value,
+            style: TextStyle(color: Colors.grey[700]),
+          ),
         ),
       ],
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -251,7 +270,7 @@ class _CommunityMapScreenState extends State<CommunityMapScreen> {
             },
             mapType: MapType.terrain,
           ),
-          
+
           Positioned(
             bottom: 20,
             left: 20,
@@ -263,7 +282,7 @@ class _CommunityMapScreenState extends State<CommunityMapScreen> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 10,
                     spreadRadius: 2,
                   ),
@@ -293,17 +312,14 @@ class _CommunityMapScreenState extends State<CommunityMapScreen> {
       ),
     );
   }
-  
+
   Widget _buildLegendItem(Color color, String label) {
     return Row(
       children: [
         Container(
           width: 12,
           height: 12,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         SizedBox(width: 6),
         TranslatedText(label, style: TextStyle(fontSize: 12)),

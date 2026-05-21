@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:math';  // ← ADD THIS for cos/sin
+// ← ADD THIS for cos/sin
 import 'main.dart';
 
 class PrivacyManager {
@@ -9,17 +9,17 @@ class PrivacyManager {
   static const String _keyCameraConsent = 'camera_consent';
   static const String _keyDataProcessingConsent = 'data_processing_consent';
   static const String _keyCommunityConsent = 'community_consent';
-  
+
   static Future<bool> hasAcceptedPrivacy() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool(_keyPrivacyAccepted) ?? false;
   }
-  
+
   static Future<void> acceptPrivacy() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_keyPrivacyAccepted, true);
   }
-  
+
   static Future<bool> hasConsent(String type) async {
     final prefs = await SharedPreferences.getInstance();
     switch (type) {
@@ -35,7 +35,7 @@ class PrivacyManager {
         return false;
     }
   }
-  
+
   static Future<void> saveConsent(String type, bool value) async {
     final prefs = await SharedPreferences.getInstance();
     switch (type) {
@@ -53,7 +53,7 @@ class PrivacyManager {
         break;
     }
   }
-  
+
   static Future<void> resetConsents() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
@@ -62,6 +62,8 @@ class PrivacyManager {
 
 // GDPR Welcome Screen with EU FLAG
 class PrivacyWelcomeScreen extends StatefulWidget {
+  const PrivacyWelcomeScreen({super.key});
+
   @override
   State<PrivacyWelcomeScreen> createState() => _PrivacyWelcomeScreenState();
 }
@@ -71,9 +73,9 @@ class _PrivacyWelcomeScreenState extends State<PrivacyWelcomeScreen> {
   bool _cameraConsent = false;
   bool _dataConsent = false;
   bool _communityConsent = false;
-  
+
   bool get _allRequired => _dataConsent && _cameraConsent;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,94 +86,79 @@ class _PrivacyWelcomeScreenState extends State<PrivacyWelcomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 40),
-              
+
               // EU FLAG + SHIELD
               // EU FLAG
-              Center(
-                child: Text('🇪🇺', style: TextStyle(fontSize: 100)),
-              ),
+              Center(child: Text('🇪🇺', style: TextStyle(fontSize: 100))),
 
-              
               SizedBox(height: 24),
-              
+
               Text(
                 'Welcome to AgriSnap',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              
+
               SizedBox(height: 12),
-              
+
               Text(
                 'Your Privacy Matters',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.grey[600],
-                ),
+                style: TextStyle(fontSize: 18, color: Colors.grey[600]),
                 textAlign: TextAlign.center,
               ),
-              
+
               SizedBox(height: 32),
-              
+
               Text(
                 'We need your consent to provide the best experience while respecting your privacy and complying with GDPR.',
                 style: TextStyle(fontSize: 14, height: 1.5),
                 textAlign: TextAlign.center,
               ),
-              
+
               SizedBox(height: 32),
-              
-              _buildConsentSection(
-                'Required',
-                [
-                  _buildConsentTile(
-                    'Camera & Photo Access',
-                    'Required to scan plant leaves for disease detection',
-                    Icons.camera_alt,
-                    _cameraConsent,
-                    (value) => setState(() => _cameraConsent = value),
-                    required: true,
-                  ),
-                  _buildConsentTile(
-                    'Data Processing',
-                    'Process images using AI for disease detection',
-                    Icons.analytics,
-                    _dataConsent,
-                    (value) => setState(() => _dataConsent = value),
-                    required: true,
-                  ),
-                ],
-              ),
-              
+
+              _buildConsentSection('Required', [
+                _buildConsentTile(
+                  'Camera & Photo Access',
+                  'Required to scan plant leaves for disease detection',
+                  Icons.camera_alt,
+                  _cameraConsent,
+                  (value) => setState(() => _cameraConsent = value),
+                  required: true,
+                ),
+                _buildConsentTile(
+                  'Data Processing',
+                  'Process images using AI for disease detection',
+                  Icons.analytics,
+                  _dataConsent,
+                  (value) => setState(() => _dataConsent = value),
+                  required: true,
+                ),
+              ]),
+
               SizedBox(height: 24),
-              
-              _buildConsentSection(
-                'Optional (Enhance Your Experience)',
-                [
-                  _buildConsentTile(
-                    'Location Services',
-                    'Get region-specific disease insights and weather data',
-                    Icons.location_on,
-                    _locationConsent,
-                    (value) => setState(() => _locationConsent = value),
-                    required: false,
-                  ),
-                  _buildConsentTile(
-                    'Community Features',
-                    'Share and view posts from nearby farmers',
-                    Icons.people,
-                    _communityConsent,
-                    (value) => setState(() => _communityConsent = value),
-                    required: false,
-                  ),
-                ],
-              ),
-              
+
+              _buildConsentSection('Optional (Enhance Your Experience)', [
+                _buildConsentTile(
+                  'Location Services',
+                  'Get region-specific disease insights and weather data',
+                  Icons.location_on,
+                  _locationConsent,
+                  (value) => setState(() => _locationConsent = value),
+                  required: false,
+                ),
+                _buildConsentTile(
+                  'Community Features',
+                  'Share and view posts from nearby farmers',
+                  Icons.people,
+                  _communityConsent,
+                  (value) => setState(() => _communityConsent = value),
+                  required: false,
+                ),
+              ]),
+
               SizedBox(height: 32),
-              
+
               Container(
                 padding: EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -184,7 +171,11 @@ class _PrivacyWelcomeScreenState extends State<PrivacyWelcomeScreen> {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.info_outline, color: Colors.blue[700], size: 20),
+                        Icon(
+                          Icons.info_outline,
+                          color: Colors.blue[700],
+                          size: 20,
+                        ),
                         SizedBox(width: 8),
                         Text(
                           'Your Rights (GDPR)',
@@ -204,9 +195,9 @@ class _PrivacyWelcomeScreenState extends State<PrivacyWelcomeScreen> {
                   ],
                 ),
               ),
-              
+
               SizedBox(height: 24),
-              
+
               ElevatedButton(
                 onPressed: _allRequired ? _handleAccept : null,
                 style: ElevatedButton.styleFrom(
@@ -218,16 +209,15 @@ class _PrivacyWelcomeScreenState extends State<PrivacyWelcomeScreen> {
                   elevation: 4,
                 ),
                 child: Text(
-                  _allRequired ? 'Accept & Continue' : 'Accept Required Items First',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  _allRequired
+                      ? 'Accept & Continue'
+                      : 'Accept Required Items First',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
-              
+
               SizedBox(height: 16),
-              
+
               Center(
                 child: TextButton(
                   onPressed: _showPrivacyPolicy,
@@ -240,7 +230,7 @@ class _PrivacyWelcomeScreenState extends State<PrivacyWelcomeScreen> {
                   ),
                 ),
               ),
-              
+
               SizedBox(height: 40),
             ],
           ),
@@ -248,7 +238,7 @@ class _PrivacyWelcomeScreenState extends State<PrivacyWelcomeScreen> {
       ),
     );
   }
-  
+
   Widget _buildConsentSection(String title, List<Widget> children) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,7 +256,7 @@ class _PrivacyWelcomeScreenState extends State<PrivacyWelcomeScreen> {
       ],
     );
   }
-  
+
   Widget _buildConsentTile(
     String title,
     String description,
@@ -295,10 +285,7 @@ class _PrivacyWelcomeScreenState extends State<PrivacyWelcomeScreen> {
             Expanded(
               child: Text(
                 title,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               ),
             ),
             if (required)
@@ -330,7 +317,7 @@ class _PrivacyWelcomeScreenState extends State<PrivacyWelcomeScreen> {
       ),
     );
   }
-  
+
   Widget _buildRightItem(String text) {
     return Padding(
       padding: EdgeInsets.only(bottom: 6),
@@ -348,19 +335,20 @@ class _PrivacyWelcomeScreenState extends State<PrivacyWelcomeScreen> {
       ),
     );
   }
-  
+
   Future<void> _handleAccept() async {
     await PrivacyManager.acceptPrivacy();
     await PrivacyManager.saveConsent('camera', _cameraConsent);
     await PrivacyManager.saveConsent('data', _dataConsent);
     await PrivacyManager.saveConsent('location', _locationConsent);
     await PrivacyManager.saveConsent('community', _communityConsent);
-    
+
+    if (!mounted) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => MainNavigationScreen()),
     );
   }
-  
+
   void _showPrivacyPolicy() {
     showDialog(
       context: context,
@@ -392,36 +380,32 @@ class _PrivacyWelcomeScreenState extends State<PrivacyWelcomeScreen> {
 
 // PRIVACY SETTINGS SCREEN
 class PrivacySettingsScreen extends StatefulWidget {
+  const PrivacySettingsScreen({super.key});
+
   @override
   State<PrivacySettingsScreen> createState() => _PrivacySettingsScreenState();
 }
 
 class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
   bool _locationConsent = false;
-  bool _cameraConsent = false;
-  bool _dataConsent = false;
   bool _communityConsent = false;
-  
+
   @override
   void initState() {
     super.initState();
     _loadConsents();
   }
-  
+
   Future<void> _loadConsents() async {
     final location = await PrivacyManager.hasConsent('location');
-    final camera = await PrivacyManager.hasConsent('camera');
-    final data = await PrivacyManager.hasConsent('data');
     final community = await PrivacyManager.hasConsent('community');
-    
+
     setState(() {
       _locationConsent = location;
-      _cameraConsent = camera;
-      _dataConsent = data;
       _communityConsent = community;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -442,7 +426,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
             style: TextStyle(color: Colors.grey[600]),
           ),
           SizedBox(height: 24),
-          
+
           SwitchListTile(
             value: _locationConsent,
             onChanged: (val) async {
@@ -451,9 +435,9 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
             },
             title: Text('Location Services'),
             subtitle: Text('Regional disease insights'),
-            activeColor: Colors.green[700],
+            activeThumbColor: Colors.green[700],
           ),
-          
+
           SwitchListTile(
             value: _communityConsent,
             onChanged: (val) async {
@@ -462,11 +446,11 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
             },
             title: Text('Community Features'),
             subtitle: Text('Share with nearby farmers'),
-            activeColor: Colors.green[700],
+            activeThumbColor: Colors.green[700],
           ),
-          
+
           Divider(height: 32),
-          
+
           ListTile(
             leading: Icon(Icons.download, color: Colors.blue),
             title: Text('Download My Data'),
@@ -477,7 +461,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
               );
             },
           ),
-          
+
           ListTile(
             leading: Icon(Icons.delete_forever, color: Colors.red),
             title: Text('Delete My Account'),
@@ -488,13 +472,15 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
       ),
     );
   }
-  
+
   void _showDeleteConfirmation() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text('Delete Account?'),
-        content: Text('This will permanently delete all your data. This action cannot be undone.'),
+        content: Text(
+          'This will permanently delete all your data. This action cannot be undone.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -503,6 +489,7 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
           TextButton(
             onPressed: () async {
               await PrivacyManager.resetConsents();
+              if (!context.mounted) return;
               Navigator.pop(context);
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(

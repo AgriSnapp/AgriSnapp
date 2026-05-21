@@ -7,7 +7,7 @@ class AchievementBadge {
   final Color color;
   final int requiredCount;
   final String type;
-  
+
   AchievementBadge({
     required this.id,
     required this.name,
@@ -72,43 +72,43 @@ class BadgeSystem {
       ),
     ];
   }
-  
+
   static List<AchievementBadge> getEarnedBadges(Map<String, int> userStats) {
     List<AchievementBadge> earnedBadges = [];
-    
+
     for (var badge in getAllBadges()) {
       int userCount = userStats[badge.type] ?? 0;
-      
+
       if (userCount >= badge.requiredCount) {
         earnedBadges.add(badge);
       }
     }
-    
+
     return earnedBadges;
   }
-  
+
   // Get top 3 badges to display
   static List<AchievementBadge> getTopBadges(Map<String, int> userStats) {
     List<AchievementBadge> earned = getEarnedBadges(userStats);
-    
+
     // Sort by required count (higher = more impressive)
     earned.sort((a, b) => b.requiredCount.compareTo(a.requiredCount));
-    
+
     // Return top 3
     return earned.take(3).toList();
   }
-  
+
   static int calculateLevel(Map<String, int> userStats) {
     int totalPoints = 0;
-    
+
     totalPoints += (userStats['scan'] ?? 0) * 5;
     totalPoints += (userStats['post'] ?? 0) * 10;
     totalPoints += (userStats['help'] ?? 0) * 2;
     totalPoints += (userStats['streak'] ?? 0) * 3;
-    
+
     return (totalPoints / 100).floor() + 1;
   }
-  
+
   static String getLevelTitle(int level) {
     if (level >= 20) return 'Legend';
     if (level >= 15) return 'Expert';
@@ -116,7 +116,7 @@ class BadgeSystem {
     if (level >= 5) return 'Skilled';
     return 'Farmer';
   }
-  
+
   static Color getLevelColor(int level) {
     if (level >= 20) return Colors.amber;
     if (level >= 15) return Colors.orange;
