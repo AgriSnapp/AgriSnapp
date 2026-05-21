@@ -1,1 +1,17 @@
-{"name":"agrisnap","version":"0.0.1","private":true,"scripts":{"start":"node node_modules/react-native/local-cli/cli.js start"},"dependencies":{"react-native":"0.82.0","react-native-camera":"^4.2.1"}}
+{
+  "name": "agrisnap",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "react-native": "0.82.0",
+    "react-native-camera": "^4.2.1"
+  },
+  "devDependencies": {
+    "prettier": "3.8.3"
+  }
+}
