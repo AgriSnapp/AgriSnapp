@@ -30,9 +30,8 @@ jobs:
       - name: Analyze (lint)
         run: flutter analyze
 
-      # TODO: Re-enable once UI assertion errors in privacy_manager are fixed
-      # - name: Run tests
-      #   run: flutter test
+      - name: Run tests
+        run: flutter test
 
   prettier:
     name: Prettier (format check)

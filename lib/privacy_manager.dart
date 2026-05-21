@@ -275,45 +275,49 @@ class _PrivacyWelcomeScreenState extends State<PrivacyWelcomeScreen> {
           width: 2,
         ),
       ),
-      child: CheckboxListTile(
-        value: value,
-        onChanged: (val) => onChanged(val ?? false),
-        title: Row(
-          children: [
-            Icon(icon, color: Colors.green[700], size: 20),
-            SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                title,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-              ),
-            ),
-            if (required)
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(8),
-                ),
+      child: Material(
+        type: MaterialType.transparency,
+        borderRadius: BorderRadius.circular(12),
+        child: CheckboxListTile(
+          value: value,
+          onChanged: (val) => onChanged(val ?? false),
+          title: Row(
+            children: [
+              Icon(icon, color: Colors.green[700], size: 20),
+              SizedBox(width: 8),
+              Expanded(
                 child: Text(
-                  'REQUIRED',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
+                  title,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                ),
+              ),
+              if (required)
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    'REQUIRED',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-          ],
-        ),
-        subtitle: Padding(
-          padding: EdgeInsets.only(top: 4),
-          child: Text(
-            description,
-            style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+            ],
           ),
+          subtitle: Padding(
+            padding: EdgeInsets.only(top: 4),
+            child: Text(
+              description,
+              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+            ),
+          ),
+          activeColor: Colors.green[700],
         ),
-        activeColor: Colors.green[700],
       ),
     );
   }
