@@ -205,4 +205,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Built with ❤️ by GDSC LUISS Guido Carli
+Built with ❤️ by Yasemin Ates, Giulio Presaghi, Alayna Shariff, Quynh Anh Tran, Rebecca Raible
+
