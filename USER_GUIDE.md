@@ -1,6 +1,6 @@
 # AgriSnapp User Guide
 
-AgriSnapp is a mobile-first food security tool that empowers farmers and agricultural stakeholders to monitor crop health, detect diseases early, and make data-driven decisions in the field. This guide covers the app's target users, core features, and intended use cases.
+AgriSnapp is a food security tool that empowers farmers and agricultural stakeholders to monitor crop health, detect diseases early, and make data-driven decisions in the field. This guide covers the app's target users, core features, and intended use cases.
 
 ---
 
@@ -9,13 +9,13 @@ AgriSnapp is a mobile-first food security tool that empowers farmers and agricul
 AgriSnapp is designed for four primary user roles:
 
 **Smallholder Farmers**
-Farmers who need accessible, low-barrier tools for monitoring their crops. AgriSnapp allows them to snap a photo of a crop and receive an instant health assessment without requiring agronomic expertise or internet connectivity for core features.
+Farmers who need accessible, low barrier tools for monitoring their crops. AgriSnapp allows them to snap a photo of a crop and receive an instant health assessment without requiring agronomic expertise or internet connectivity for core features.
 
 **Agricultural Extension Workers**
 Field agents conducting assessments across multiple farms. AgriSnapp supports efficient data collection and provides standardised disease identification, helping extension workers deliver consistent recommendations at scale.
 
 **Agricultural Students**
-Students learning to identify crop diseases in real-world conditions. AgriSnapp serves as a practical learning tool, providing instant feedback on disease identification during fieldwork.
+Students learning to identify crop diseases in real world conditions. AgriSnapp serves as a practical learning tool, providing instant feedback on disease identification during fieldwork.
 
 **Food Security Researchers**
 Researchers collecting field data on crop health trends. AgriSnapp's structured data outputs and community map features support aggregated analysis of disease prevalence and spread.
@@ -35,9 +35,8 @@ Users can track the condition of their crops over time by logging repeated asses
 > **Current status:** Planned feature. Data persistence via `shared_preferences` is implemented; longitudinal tracking UI is in development.
 
 ### 3. Actionable Recommendations
-Following a disease detection result, the app surfaces contextual recommendations — such as treatment options or preventive measures — based on the identified condition.
+Following a disease detection result, the app surfaces contextual recommendations: such as treatment options or preventive measures, based on the identified condition.
 
-> **Current status:** Planned feature. Recommendation logic is scoped in `ai_insights.dart`.
 
 ### 4. Community Map
 A shared map screen allows users to view anonymised disease reports from other farmers in their region, enabling early warning of spreading conditions.
@@ -45,17 +44,17 @@ A shared map screen allows users to view anonymised disease reports from other f
 > **Current status:** UI prototype complete. Powered by `community_map_screen.dart`; pending migration from Google Maps SDK to `flutter_map` (OpenStreetMap) for open-source compliance.
 
 ### 5. Offline Support
-Core features — including image capture and local storage of assessments — are designed to function without an internet connection, making AgriSnapp suitable for use in low-connectivity rural environments.
+Core features — including image capture and local storage of assessments; are designed to function without an internet connection, making AgriSnapp suitable for use in low-connectivity rural environments.
 
 > **Current status:** Partial. Local storage via `shared_preferences` is implemented. Full offline ML inference is planned via TensorFlow Lite migration.
 
 ### 6. Multilingual Support
-The app includes a translation layer (`translation_service.dart`) to support multiple languages, ensuring accessibility for non-English-speaking farming communities.
+The app includes a translation layer (`translation_service.dart`) to support multiple languages, ensuring accessibility for non-English speaking farming communities.
 
 > **Current status:** Translation service implemented; language coverage is being expanded.
 
 ### 7. Badge System
-A lightweight gamification layer rewards users for consistent crop monitoring activity, encouraging regular engagement and data collection.
+A gamification layer rewards users for consistent crop monitoring activity, encouraging regular engagement and data collection.
 
 > **Current status:** Prototype implemented in `badge_system.dart`.
 
