@@ -2,7 +2,7 @@
 
 ## Our Pledge
 
-AgriSnapp is a student-led, open-source project committed to building food security tools for farming communities worldwide. We are committed to making participation in this project a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
+AgriSnapp is a student-led, open-source project committed to building food security tools for farming communities worldwide. We are committed to making participation in this project a harassment-free experience for everyone.
 
 ## Our Standards
 
@@ -30,7 +30,7 @@ This Code of Conduct applies to all project spaces, including the GitHub reposit
 
 Instances of abusive, harassing, or otherwise unacceptable behaviour may be reported by contacting the project maintainers at:
 
-**agrisnapp.project@gmail.com**
+**raible.rebecca@gmail.com**
 
 All complaints will be reviewed and investigated promptly and fairly. The maintainer team is obligated to maintain confidentiality with regard to the reporter of an incident.
 
