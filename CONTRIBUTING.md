@@ -75,7 +75,7 @@ All complaints will be reviewed and investigated promptly and fairly. The mainta
 
 All reports are treated as confidential. Identities of reporters will not be disclosed without explicit consent. The maintainer team will not retaliate against anyone who makes a good-faith report.
 
-## Attribution
+### Attribution
 
 This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org/version/2/1/code_of_conduct/), version 2.1, which is widely adopted across open-source projects recognised by the Digital Public Goods Alliance.
 
